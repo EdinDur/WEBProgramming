@@ -500,6 +500,7 @@ textarea.input {
 .header-ctn {
   float: right;
   padding: 15px 0px;
+  cursor: pointer;
 }
 
 .header-ctn>div {
@@ -1856,7 +1857,7 @@ textarea.input {
 .order-details {
   position: relative;
   padding: 0px 30px 30px;
-  border-right: 1px solid #E4E7ED;
+  border-right: 1px solid #ede8e4;
   border-left: 1px solid #E4E7ED;
   border-bottom: 1px solid #E4E7ED;
 }
@@ -1875,7 +1876,10 @@ textarea.input {
 
 .order-summary {
   margin: 15px 0px;
+  text-transform: uppercase;
+  font-weight: bold;
 }
+
 
 .order-summary .order-col {
   display: table;
@@ -1914,6 +1918,9 @@ textarea.input {
 .order-details .order-submit {
   display: block;
   margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  
 }
 
 /*=========================================================
@@ -2197,13 +2204,14 @@ textarea.input {
 }
 
 .form-group {
-  margin-right: 20px;
+
   display: flex;
   align-items: center;
 }
 
 .form-group label {
-  margin-right: 10px;
+  margin-top: 7px;
+  margin-left: 10px;
 }
 /*=========================================================
 	14 -> LOGIN
@@ -2211,15 +2219,20 @@ textarea.input {
 /* Bordered form */
 .login-form {
   border: 3px solid #f1f1f1;
+  width: 30%; /* Adjust the width as per your requirements */
+  margin-left: auto; /* Move the form to the right */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 /* Full-width inputs */
-input[type=text], input[type=password] ,input[type=e-mail]{
+input[type=text], input[type=password] ,input[type=email]{
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid #ccc;
+  border: 1px solid #0c0b0b;
   box-sizing: border-box;
 }
 
@@ -2232,6 +2245,7 @@ input[type=text], input[type=password] ,input[type=e-mail]{
   border-radius: 40px 40px 40px 40px;
   cursor: pointer;
   width: 100%;
+  font-size: 1.2em; 
 }
 
 /* Add a hover effect for buttons */
@@ -2254,10 +2268,19 @@ button:hover {
 
 /* Add padding to containers */
 .containerr {
-  margin-left: 320px;
-  width: 330px;
-
+  width: 30%;
+  margin: 0 auto; 
+  text-align: center; 
+  font-weight: bold;
+  padding-bottom: 40px;
   
+}
+.containerr a {
+  font-size: 1.2em; /* Adjust the font size as needed */
+}
+
+.containerr label[for="uname"], label[for="psw"], label[for="psw2"], label[for="email"] {
+  font-size: 1.2em; /* Adjust the font size as needed */
 }
 
 /* The "Forgot password" text */
@@ -2269,13 +2292,14 @@ span.psw {
 
 .login-section{
   padding-bottom: 30px;
+  
 }
 
 .login-section p {
   font-size: 30px;
   color: #333;
   line-height: 1.5;
-  margin-left: 110px;
+  text-align: center;
 }
 
 a.register-link {
@@ -2284,18 +2308,7 @@ a.register-link {
   transition: color 0.3s ease;
 }
 
-.centered-links1 {
-  font-size: 16px;
-  color: #333;
-  line-height: 1.5;
-  margin-left: 130px;
-}
-.centered-links2 {
-  font-size: 16px;
-  color: #333;
-  line-height: 1.5;
-  margin-left: 95px;
-}
+
 
 /*=========================================================
 	15 -> REGISTER
@@ -2331,11 +2344,14 @@ a.register-link {
 
 .table-cart{
   table-layout: auto;
-  width: 1200px;
-  margin-left: 190px;
+  width: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
-
+.table-cart td:first-child img {
+  width: 100px; 
+}
 
 
 .checkout-btn{
@@ -2373,7 +2389,7 @@ a.register-link {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  width: 200%;
+  width: 95%;
 }
 
 .custom-button {
@@ -2388,11 +2404,8 @@ a.register-link {
   text-align: center;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
-  text-decoration: none; /* Add this line to remove underline for links */
+  text-decoration: none; 
 }
 
-/* Style for the right button */
-.custom-button.right {
-  background-color: #D10024;
-  margin-left: 10px;
-}
+
+
