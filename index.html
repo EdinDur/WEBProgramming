@@ -27,13 +27,8 @@
 		<!-- Custom stlylesheet -->
 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
 
-		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
+		<link rel="stylesheet"  href="css/spapp.css"/>
+		<link href="css/toaster.css" rel="stylesheet">
     </head>
 	<body>
 		<header>
@@ -46,7 +41,7 @@
 						<li><a href="#"><i class="fa fa-map-marker"></i> Rustempasina</a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+						<li><a href="#login"><i class="fa fa-user-o"></i> My Account</a></li>
 					</ul>
 				</div>
 			</div>
@@ -61,7 +56,7 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="index.html" class="logo">
+								<a href="#home" class="logo">
 									<img src="./img/logo.png" alt="">
 								</a>
 							</div>
@@ -74,7 +69,7 @@
 							<div class="header-search">
 								<form>
 									<input class="input" placeholder="Search here">
-									<button class="search-btn">Search</button>
+									<button type="search" class="search-btn" id="search-button">Search</button>
 								</form>
 							</div>
 						</div>
@@ -86,7 +81,7 @@
 							<div class="header-ctn">
 								<!-- Wishlist -->
 								<div>
-									<a href="wishlist.html">
+									<a href="#wishlist">
 										<i class="fa fa-heart-o"></i>
 										<span>Your Wishlist</span>
 										<div class="qty">1</div>
@@ -99,41 +94,21 @@
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										<div class="qty">3</div>
+										<div class="qty" id="totalItems">0</div>
 									</a>
 									<div class="cart-dropdown">
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img2/Razer.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="product.html">RAZER BLACKSHARK V2 PRO</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span>$119.99</h4>
-												</div>
-											
-											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img2/LogitechG332.jfif" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="product.html">LogitechG332</a></h3>
-													<h4 class="product-price"><span class="qty">2x</span>$122.40</h4>
-												</div>
-											</div>
-										</div>
+										<div class="cart-list" id="cartList"></div>
 										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $242.39</h5>
+											<small id="totalQuantity">0 Item(s) selected</small>
+											<h5 id="subtotal">SUBTOTAL: $0.00</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="cart.html">View Cart</a>
-											<a href="checkout.html">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="#cart">View Cart</a>
+											<a href="#checkout">Checkout <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
+								
 								<!-- /Cart -->
 							</div>
 						</div>
@@ -155,14 +130,14 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-						<li class="active"><a href="index.html">Home</a></li>
-						<li><a href="store.html">Laptops</a></li>
-						<li><a href="store.html">PC</a></li>
-						<li><a href="store.html">Components</a></li>
-						<li><a href="store.html">Accessories</a></li>
-						<li><a href="store.html">Smartphones</a></li>
-						<li><a href="store.html">Network</a></li>
-						<li><a href="store.html">Household Appliances</a></li>
+						<li class="active"><a href="#home">Home</a></li>
+						<li><a href="#store">Laptops</a></li>
+						<li><a href="#store">PC</a></li>
+						<li><a href="#store">Components</a></li>
+						<li><a href="#store">Accessories</a></li>
+						<li><a href="#store">Smartphones</a></li>
+						<li><a href="#store">Network</a></li>
+						<li><a href="#store">Household Appliances</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>
@@ -170,466 +145,23 @@
 			</div>
 			<!-- /container -->
 		</nav>
-		<!-- /NAVIGATION -->
-		<!-- SECTION -->
-		<div class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<!-- shop -->
-					<div class="col-md-4 col-xs-6">
-						<div class="shop">
-							<div class="shop-img">
-								<img src="./img/shop01.png" alt="">
-							</div>
-							<div class="shop-body">
-								<h3>Laptops</h3>
-								<a href="store.html" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<!-- /shop -->
+<!-- /NAVIGATION -->
 
-					<!-- shop -->
-					<div class="col-md-4 col-xs-6">
-						<div class="shop">
-							<div class="shop-img">
-								<img src="./img/shop03.png" alt="">
-							</div>
-							<div class="shop-body">
-								<h3>Accessories</h3>
-								<a href="store.html" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<!-- /shop -->
-
-					<!-- shop -->
-					<div class="col-md-4 col-xs-6">
-						<div class="shop">
-							<div class="shop-img">
-								<img src="./img2/Smartphone.webp" alt="">
-							</div>
-							<div class="shop-body">
-								<h3>Smartphones</h3>
-								<a href="store.html" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<!-- /shop -->
+		<div class="container mt-5">
+			<div class="row">
+				<div class="col-md-12">
+					<main id="spapp" role="main">
+						<section id="cart" data-load="cart.html"></section>
+						<section id="checkout" data-load="checkout.html"></section>
+						<section id="login" data-load="login.html"></section>
+						<section id="product" data-load="product.html"></section>
+						<section id="register" data-load="register.html"></section>
+						<section id="store" data-load="store.html"></section>
+						<section id="wishlist" data-load="wishlist.html"></section>
+						<section id="home" data-load="home.html"></section>
+					  </main>
 				</div>
-				<!-- /row -->
 			</div>
-			<!-- /container -->
-		</div>
-		<!-- /SECTION -->
-
-		<!-- SECTION -->
-		<div class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-
-					<!-- section title -->
-					<div class="col-md-12">
-						<div class="section-title">
-							<h3 class="title">New Products</h3>
-							
-						</div>
-					</div>
-					<!-- /section title -->
-
-					<!-- Products tab & slick -->
-					<div class="col-md-12">
-						<div class="row">
-							<div class="products-tabs">
-								<!-- tab -->
-								<div id="tab1" class="tab-pane active">
-									<div class="products-slick" data-nav="#slick-nav-1">
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img2/S22+.jpg" alt="">
-												<div class="product-label">
-													<span class="new">NEW</span>
-												</div>
-											</div>
-											<div class="product-body">
-												<p class="product-category">Smartphones</p>
-												<h3 class="product-name"><a href="product.html">Samsung Galaxy S22+</a></h3>
-												<h4 class="product-price">$980.00</h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img2/GIGABYTE G5 KF.png" alt="">
-												<div class="product-label">
-													<span class="new">NEW</span>
-												</div>
-											</div>
-											<div class="product-body">
-												<p class="product-category">Laptops</p>
-												<h3 class="product-name"><a href="product.html">GIGABYTE G5 KF</a></h3>
-												<h4 class="product-price">$749.99</h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img2/HyperX Cloud Alpha S .jpeg" alt="">
-												<div class="product-label">
-													<span class="new">NEW</span>
-												</div>
-											</div>
-											<div class="product-body">
-												<p class="product-category">Headphones</p>
-												<h3 class="product-name"><a href="product.html">HyperX Cloud Alpha S </a></h3>
-												<h4 class="product-price">$129.99</h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img2/LogitechG332.jfif" alt="">
-												<div class="product-label">
-													<span class="sale">-10%</span>
-													<span class="new">NEW</span>													
-												</div>
-											</div>
-											<div class="product-body">
-												<p class="product-category">Headphones</p>
-												<h3 class="product-name"><a href="product.html">Logitech G332</a></h3>
-												<h4 class="product-price">$61.20 <del class="product-old-price">$67.99</del></h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star-o"></i>
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img2/A51.jpg" alt="">
-												<div class="product-label">
-													<span class="new">NEW</span>
-												</div>
-											</div>
-											<div class="product-body">
-												<p class="product-category">Smartphones</p>
-												<h3 class="product-name"><a href="product.html">A51</a></h3>
-												<h4 class="product-price">$299.99</h4>
-												<div class="product-rating">
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->											
-									</div>
-									<div id="slick-nav-1" class="products-slick-nav"></div>
-								</div>
-								<!-- /tab -->
-							</div>
-						</div>
-					</div>
-					<!-- Products tab & slick -->
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /SECTION -->
-
-		<!-- HOT DEAL SECTION -->
-		<div id="hot-deal" class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="hot-deal">
-							<ul class="hot-deal-countdown">
-								<li>
-									<div>
-										<h3>02</h3>
-										<span>Days</span>
-									</div>
-								</li>
-								<li>
-									<div>
-										<h3>10</h3>
-										<span>Hours</span>
-									</div>
-								</li>
-								<li>
-									<div>
-										<h3>34</h3>
-										<span>Mins</span>
-									</div>
-								</li>
-								<li>
-									<div>
-										<h3>60</h3>
-										<span>Secs</span>
-									</div>
-								</li>
-							</ul>
-							<h2 class="text-uppercase">hot deal this week</h2>
-							<p>New Collection Up to 40% OFF</p>
-							<a class="primary-btn cta-btn" href="store.html">Shop now</a>
-						</div>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /HOT DEAL SECTION -->
-
-		<!-- SECTION -->
-		<div class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-
-					<!-- section title -->
-					<div class="col-md-12">
-						<div class="section-title">
-							<h3 class="title">Top selling</h3>
-							
-
-						</div>
-					</div>
-					<!-- /section title -->
-
-					<!-- Products tab & slick -->
-					<div class="col-md-12">
-						<div class="row">
-							<div class="products-tabs">
-								<!-- tab -->
-								<div id="tab2" class="tab-pane fade in active">
-									<div class="products-slick" data-nav="#slick-nav-2">
-										<!-- product -->
-										<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="./img2/HyperXAlpha.jpg" alt="">
-										<div class="product-label">
-											<span class="new">NEW</span>
-										</div>
-									</div>
-									<div class="product-body">
-										<p class="product-category">Headphones</p>
-										<h3 class="product-name"><a href="product.html">HyperX Cloud Alpha S </a></h3>
-										<h4 class="product-price">$129.99</h4>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i>
-										</div>
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /product -->
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="col-md-4 col-xs-6">
-											<div class="product">
-												<div class="product-img">
-													<img src="./img2/Razer.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<p class="product-category">Headphones</p>
-													<h3 class="product-name"><a href="product.html">RAZER BLACKSHARK V2 PRO</a></h3>
-													<h4 class="product-price">$119.99</h4>
-													<div class="product-rating">
-													</div>
-													<div class="product-btns">
-														<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>											
-														<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-													</div>
-												</div>
-												<div class="add-to-cart">
-													<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-												</div>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img2/A51.jpg" alt="">
-												<div class="product-label">
-													<span class="new">NEW</span>
-												</div>
-											</div>
-											<div class="product-body">
-												<p class="product-category">Smartphones</p>
-												<h3 class="product-name"><a href="product.html">A51</a></h3>
-												<h4 class="product-price">$299.99</h4>
-												<div class="product-rating">
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img2/S22+.jpg" alt="">
-												<div class="product-label">
-													<span class="new">NEW</span>
-												</div>
-											</div>
-											<div class="product-body">
-												<p class="product-category">Smartphones</p>
-												<h3 class="product-name"><a href="product.html">Samsung Galaxy S22+</a></h3>
-												<h4 class="product-price">$980.00</h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img2/GIGABYTE G5 KF.png" alt="">
-												<div class="product-label">
-													<span class="new">NEW</span>
-												</div>
-											</div>
-											<div class="product-body">
-												<p class="product-category">Laptops</p>
-												<h3 class="product-name"><a href="product.html">GIGABYTE G5 KF</a></h3>
-												<h4 class="product-price">$749.99</h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
-									</div>
-									<div id="slick-nav-2" class="products-slick-nav"></div>
-								</div>
-								<!-- /tab -->
-							</div>
-						</div>
-					</div>
-					<!-- /Products tab & slick -->
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
 		<!-- FOOTER -->
@@ -656,11 +188,11 @@
 							<div class="footer">
 								<h3 class="footer-title">Categories</h3>
 								<ul class="footer-links">
-									<li><a href="store.html">Hot deals</a></li>
-									<li><a href="store.html">Laptops</a></li>
-									<li><a href="store.html">Smartphones</a></li>
-									<li><a href="store.html">PC</a></li>
-									<li><a href="store.html">Accessories</a></li>
+									<li><a href="#store">Hot deals</a></li>
+									<li><a href="#store">Laptops</a></li>
+									<li><a href="#store">Smartphones</a></li>
+									<li><a href="#store">PC</a></li>
+									<li><a href="#store">Accessories</a></li>
 								</ul>
 							</div>
 						</div>
@@ -683,9 +215,9 @@
 							<div class="footer">
 								<h3 class="footer-title">Service</h3>
 								<ul class="footer-links">
-									<li><a href="#">My Account</a></li>
-									<li><a href="cart.html">View Cart</a></li>
-									<li><a href="wishlist.html">Wishlist</a></li>
+									<li><a href="#login">My Account</a></li>
+									<li><a href="#cart">View Cart</a></li>
+									<li><a href="#wishlist">Wishlist</a></li>
 								</ul>
 							</div>
 						</div>
@@ -732,6 +264,17 @@
 		<script src="js/nouislider.min.js"></script>
 		<script src="js/jquery.zoom.min.js"></script>
 		<script src="js/main.js"></script>
-
+		<script src="js/jquery.spapp.min.js"></script>
+		<script src="js/cart.js"></script>
+		<script src="/js/taostr.js"></script>
+		<script>
+			var app = $.spapp({
+  			defaultView  : "#home",
+ 			templateDir  : "./tpl/",
+  			pageNotFound : "error_404"
+			});
+			
+			app.run();
+		</script>
 	</body>
 </html>
