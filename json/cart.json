@@ -39,16 +39,6 @@
         "new":false,
         "sale": null      
     },
-    {        
-        "name":"ryzen 5 8000",
-        "brand":"amd",
-        "price":599.99,
-        "category":"components",
-        "type":"null",
-        "mimage":"img2/ryzen5.avif",
-        "new":false,
-        "sale": null      
-    },
     {
         "name":"gigabyte 5g kf",
         "brand":"gigabyte",

@@ -1,5 +1,5 @@
 $.ajax({
-    url: "http://127.0.0.1:443/json/wishlist.json",
+    url: "beckend/get_wishlist.php",
     dataType: "json",
     success: function(data) {
         function populateTableWithData(data) {
@@ -43,14 +43,14 @@ $.ajax({
 
 $('#emptyWishlistButton').click(function() {
     $.ajax({
-        url: "http://127.0.0.1:443/json/wishlist.json",
+        url: "beckend/delete_wishlist_all_php",
         type: "DELETE",
         success: function() {
             $('#productWishlistTableBody').empty();
             $('#totalPrice').text('$0.00');
         },
         error: function(xhr, status, error) {
-            console.error("Failed to empty the cart:", error);        
+            console.error("Failed to empty the wishlist:", error);        
         }
     });
 });

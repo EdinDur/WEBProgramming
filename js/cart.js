@@ -1,5 +1,8 @@
+let username="edin1234";
 $.ajax({
-    url: "http://127.0.0.1:443/json/cart.json",
+    url: "beckend/get_cart.php",
+    type:"GET",
+    data:{username:username},
     dataType: "json",
     success: function(data) {
         populateTableWithData(data);
@@ -7,7 +10,7 @@ $.ajax({
         populateOrderSummary(data);
     },
     error: function(xhr, status, error) {
-        console.error("Failed to fetch cart data:", error);
+
     }
 });
 
@@ -147,7 +150,7 @@ function populateOrderSummary(data) {
 
 $('#emptyCartButton').click(function() {
     $.ajax({
-        url: "http://127.0.0.1:443/json/cart.json",
+        url: "beckend/delete_cart_all.php",
         type: "DELETE",
         success: function() {
             $('#productTableBody').empty();

@@ -41,6 +41,7 @@
 						<li><a href="#"><i class="fa fa-map-marker"></i> Rustempasina</a></li>
 					</ul>
 					<ul class="header-links pull-right">
+						<li><a href="#delete_acc">Delete Account</a></li>
 						<li><a href="#login"><i class="fa fa-user-o"></i> My Account</a></li>
 					</ul>
 				</div>
@@ -67,8 +68,8 @@
 						<div class="col-md-6">
 							<div class="header-container">
 							<div class="header-search">
-								<form>
-									<input class="input" placeholder="Search here">
+								<form id="search-form">
+									<input class="input" name="search" placeholder="Search here">
 									<button type="search" class="search-btn" id="search-button">Search</button>
 								</form>
 							</div>
@@ -130,15 +131,15 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-						<li class="active"><a href="#home">Home</a></li>
-						<li><a href="#store">Laptops</a></li>
-						<li><a href="#store">PC</a></li>
-						<li><a href="#store">Components</a></li>
-						<li><a href="#store">Accessories</a></li>
-						<li><a href="#store">Smartphones</a></li>
-						<li><a href="#store">Network</a></li>
-						<li><a href="#store">Household Appliances</a></li>
-					</ul>
+						<li class="active" name="home"><a href="#home">Home</a></li>
+						<li name="allProducts"><a href="#store">All Products</a></li>
+						<li name="Laptops"><a href="#store">Laptops</a></li>
+						<li name="PC"><a href="#store">PC</a></li>
+						<li name="Components"><a href="#store">Components</a></li>
+						<li name="Accessories"><a href="#store">Accessories</a></li>
+						<li name="Smartphones"><a href="#store">Smartphones</a></li>
+						<li name="Network"><a href="#store">Network</a></li>
+					</ul>					
 					<!-- /NAV -->
 				</div>
 				<!-- /responsive-nav -->
@@ -159,6 +160,8 @@
 						<section id="store" data-load="store.html"></section>
 						<section id="wishlist" data-load="wishlist.html"></section>
 						<section id="home" data-load="home.html"></section>
+						<section id="forgot_password" data-load="forgot_password.html"></section>
+						<section id="delete_acc" data-load="delete_acc.html"></section>
 					  </main>
 				</div>
 			</div>
@@ -241,12 +244,7 @@
 								<li><i class="fa fa-cc-mastercard"></i></li>
 								<li><i class="fa fa-cc-discover"></i></li>
 								<li><i class="fa fa-cc-amex"></i></li>
-							</ul>
-							<span class="copyright">
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</span>
+							</ul>							
 						</div>
 					</div>
 						<!-- /row -->
@@ -256,7 +254,7 @@
 			<!-- /bottom footer -->
 		</footer>
 		<!-- /FOOTER -->
-
+		
 		<!-- jQuery Plugins -->
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
@@ -266,14 +264,16 @@
 		<script src="js/main.js"></script>
 		<script src="js/jquery.spapp.min.js"></script>
 		<script src="js/cart.js"></script>
-		<script src="/js/taostr.js"></script>
+		<script src="js/taostr.js"></script>
+		<script src="./js/search.js"></script>
+	
 		<script>
 			var app = $.spapp({
   			defaultView  : "#home",
  			templateDir  : "./tpl/",
   			pageNotFound : "error_404"
 			});
-			
+
 			app.run();
 		</script>
 	</body>

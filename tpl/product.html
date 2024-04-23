@@ -22,25 +22,27 @@
 		</div>
 		<!-- /BREADCRUMB -->
 
+		
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->
 			<div class="container">
 				<!-- row -->
-				<div class="row">
+				<div class="row" data-product-container>
+				<template data-product-template>
 					<!-- Product main img -->
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							<div class="product-preview">
-								<img src="./img2/HyperX Cloud Alpha S .jpeg" alt="">
+								<img src="" alt="" data-product-mImage>
 							</div>
 
 							<div class="product-preview">
-								<img src="./img2/HyperXAlpha2.webp" alt="">
+								<img src="" alt="" data-product-sImage1>
 							</div>
 
 							<div class="product-preview">
-								<img src="./img2/alpha2.webp" alt="">
+								<img src="" alt="" data-product-sImage2>
 							</div>					
 						</div>
 					</div>
@@ -50,15 +52,15 @@
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							<div class="product-preview">
-								<img src="./img2/HyperX Cloud Alpha S .jpeg" alt="">
+								<img src="" alt="" data-product-mImage>
 							</div>
 
 							<div class="product-preview">
-								<img src="./img2/HyperXAlpha2.webp" alt="">
+								<img src="" alt="" data-product-sImage1>
 							</div>
 
 							<div class="product-preview">
-								<img src="./img2/alpha2.webp" alt="">
+								<img src="" alt="" data-product-sImage2>
 							</div>
 						</div>
 					</div>
@@ -67,7 +69,7 @@
 					<!-- Product details -->
 					<div class="col-md-5">
 						<div class="product-details">
-							<h2 class="product-name">HyperX Cloud Alpha S</h2>
+							<h2 class="product-name" data-product-name></h2>
 							<div>
 								<div class="product-rating">
 									<i class="fa fa-star"></i>
@@ -78,10 +80,10 @@
 								</div>
 							</div>
 							<div>
-								<h3 class="product-price">$129.99</h3>
-								<span class="product-available">In Stock</span>
+								<h3 class="product-price" data-product-price></h3>
+								<span class="product-available" data-product-stock>In Stock</span>
 							</div>
-							<p>Good Headphones</p>
+							<p data-product-mini-description></p>
 
 							<div class="product-options">						
 								<label>
@@ -112,8 +114,7 @@
 
 							<ul class="product-links">
 								<li>Category:</li>
-								<li><a href="#store">Accessories</a></li>
-								<li><a href="#store">Headphones</a></li>
+								<li data-product-category>Accessories</li>
 							</ul>					
 
 						</div>
@@ -137,7 +138,7 @@
 								<div id="tab1" class="tab-pane fade in active">
 									<div class="row">
 										<div class="col-md-12">
-											<p>The HyperX Cloud Alpha™ S builds upon the groundbreaking Cloud Alpha and features HyperX virtual 7.1 surround sound. With the included audio control mixer, you can activate the surround sound and adjust the game audio and chat balance without having to go into any menus. Bass adjustment sliders have been added to the ear cups so you can personalize your audio. The Cloud Alpha S still features the dual-chamber driver system which reduces distortion and provides clearer sound, as well as signature HyperX comfort afforded by the memory foam ear cushions, which have been upgraded with extra breathable leatherette</p>
+											<p data-product-description></p>
 										</div>
 									</div>
 								</div>
@@ -147,13 +148,7 @@
 								<div id="tab2" class="tab-pane fade in">
 									<div class="row">
 										<div class="col-md-12">
-											<p> 
-												Up to 80 Hours of Battery Life: Nobody likes having to get out the charge cable when the game’s on the line. 80 hours of battery life should help you kiss those annoying low-battery notifications goodbye.
-Fast 2.4GHz Wireless: Lose the cord but not the performance, thanks to the fast wireless connection that keeps your audio sounding clear and in sync.
-Immersive Spatial Audio and Sound Localization: DTS Headphone:X Spatial Audio helps improve sound localization and enhance the immersion of your games and audio entertainment.
-Quality Audio with 53mm Drivers: Enhanced bass reproduction with crisp highs, clear mids, and rich lows keeps you at the to of your game with accurate and captivating audio.
-Stay in the zone with Signature HyperX comfort: Plush memory foam earpads swathed in premium leatherette help deliver a comfortable listening experience. Keep focused on your gaming, classwork, or tasks with the comfortable Cloud II Core Wireless.
-											</p>
+											<p data-product-details> </p>
 										</div>
 									</div>
 								</div>
@@ -339,6 +334,7 @@ Stay in the zone with Signature HyperX comfort: Plush memory foam earpads swathe
 							<!-- /product tab content  -->
 						</div>
 					</div>
+				</template>
 					<!-- /product tab -->
 				</div>
 				<!-- /row -->
@@ -477,11 +473,12 @@ Stay in the zone with Signature HyperX comfort: Plush memory foam earpads swathe
 
 
 		<!-- jQuery Plugins -->
-		<script src="../js/jquery.min.js"></script>
-		<script src="../js/bootstrap.min.js"></script>
-		<script src="../js/slick.min.js"></script>
-		<script src="../js/nouislider.min.js"></script>
-		<script src="../js/jquery.zoom.min.js"></script>
-		<script src="../js/main.js"></script>
+		<script src="./js/jquery.min.js"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/slick.min.js"></script>
+		<script src="./js/nouislider.min.js"></script>
+		<script src="./js/jquery.zoom.min.js"></script>
+		<script src="./js/main.js"></script>
+		<script src="./js/home.js"></script>
 
 </html>
