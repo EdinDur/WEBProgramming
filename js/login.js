@@ -1,34 +1,84 @@
-$(document).ready(function() {
-    $('form').submit(function(e) {
-        e.preventDefault();
-
-        var uname = $('[name="uname"]').val();
-        var psw = $('[name="psw"]').val();
-
-        $.ajax({
-            url: 'http://127.0.0.1:443/json/users.json',
-            dataType: 'json',
-            success: function(usersData) {
-                var isValidUser = false;
-                usersData.forEach(function(user) {
-                    if (user.uname === uname && user.psw === psw) {
-                        isValidUser = true; 
-                        return false;
-                    }
-                });
-
-                if (isValidUser) {
-                    toastr.success('Login successful!');
-                    setTimeout(function() {
-                        window.location.href = '#home';
-                    }, 2000);
-                } else {
-                    toastr.error('Invalid username or password. Please try again.');
-                }
-            },
-            error: function() {
-                toastr.error('Error loading user data. Please try again later.');
-            }
-        });
-    });
+$("#login-form").validate({
+    rules: {
+        uname: {
+            required: true
+        },       
+        psw: {
+            required: true
+        }
+    }, 
+    submitHandler: function(form, event) {
+        apiFormHandler(form, event);
+    }
 });
+
+function showSuccessMessage(message) {
+    toastr.success(message);
+}
+
+function showErrorMessage(message) {
+    toastr.error(message);
+}
+
+function blockUi(element) {
+    $(element).block({
+        message: '<div class="spinner-border text-primary" role="status"></div>',
+        css: {
+            backgroundColor: "transparent",
+            border: "0",
+        },
+        overlayCSS: {
+            backgroundColor: "#000",
+            opacity: 0.25,
+        },
+    });
+}
+
+function unblockUi(element) {
+    $(element).unblock({});
+}
+
+function serializeForm(form) {
+    let formData = {
+        username: form.uname.value,
+        psw: form.psw.value
+    };
+
+    return formData;
+}
+
+
+function apiFormHandler(form, event) {
+    event.preventDefault();
+    blockUi("#login-form");
+    let data = serializeForm(form);
+
+    $.ajax({
+        url: "beckend/get_user_login.php",
+        type: "GET",
+        data: data,
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+            if (Object.keys(response.data).length !== 0) {
+                $("#login-form")[0].reset();
+                showSuccessMessage("Login successful!");
+                console.log("Login successful");
+                setTimeout(function() {
+                    window.location.href = '#home';
+                }, 2000);
+            } else {
+                showErrorMessage("Invalid username or password");
+            }
+        },
+        error: function(xhr, status, error) {
+            showErrorMessage("Failed to login");
+        },
+        complete: function() {
+            unblockUi("#login-form");
+        }
+    });
+}
+
+
+

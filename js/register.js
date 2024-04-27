@@ -57,49 +57,43 @@ function unblockUi(element) {
 }
 
 function serializeForm(form) {
-  let jsonResult = {};
-  $.each($(form).serializeArray(), function() {
-      jsonResult[this.name] = this.value;
-  });
-  return jsonResult;
+    let jsonResult = {
+        username: form.uname.value,
+        email: form.email.value,
+        psw: form.psw.value
+    };
+    return jsonResult;
 }
 
 function apiFormHandler(form, event) {
-  event.preventDefault();
-  blockUi("#register-form");
-  let data = serializeForm(form);
+    event.preventDefault();
+    blockUi("#register-form");
+    let data = serializeForm(form);
 
-  $.getJSON("http://127.0.0.1:443/json/users.json", function(existingUsers) {
-      let existingUsernames = existingUsers.map(user => user.uname);
-      let existingEmails = existingUsers.map(user => user.email);
+    $.ajax({
+        url: "beckend/add_user.php",
+        type: "POST",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+            $("#register-form")[0].reset();
+            showSuccessMessage("Registration successful!");
+            console.log("Form submitted successfully");
 
-      if (existingUsernames.includes(data.uname)) {
-          showErrorMessage("Username already exists");
-          unblockUi("#register-form");
-          return;
-      }
-
-      if (existingEmails.includes(data.email)) {
-          showErrorMessage("Email already exists");
-          unblockUi("#register-form");
-          return;
-      }
-
-      $.post("http://127.0.0.1:443/json/users.json", JSON.stringify(data))
-          .done(function() {
-              $("#register-form")[0].reset();
-              showSuccessMessage("Registration successful!");
-              console.log("Form submitted successfully");
-          })
-          .fail(function() {
-              console.log("Failed to submit form");
-              //setTimeout(function() {
-             //   window.location.href = '#home'; For demonstration shoud go to .done
-           // }, 2000);
-          })
-          .always(function() {
-              unblockUi("#register-form");
-          });
-  });
+           
+                setTimeout(function() {
+                    window.location.href = '#home';
+                }, 2000);
+            
+        },
+        error: function(xhr, status, error) {
+            showErrorMessage("Username or Email already exist");
+        },
+        complete: function() {
+            unblockUi("#register-form");
+        }
+    });
 }
+
 

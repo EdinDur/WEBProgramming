@@ -52,7 +52,7 @@ $("#billingForm").validate({
             required: function() {
                 return $("#Visa").is(":checked");
             },
-            minlength: 3
+            length: 3
         },
         "username": {
             required: function() {
