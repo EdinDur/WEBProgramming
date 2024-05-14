@@ -1,3 +1,59 @@
+let username="edin1234";
+$.ajax({
+    url: "beckend/get_cart.php",
+    type:"GET",
+    data:{username:username},
+    dataType: "json",
+    success: function(data) {
+        populateOrderSummary(data);
+    },
+    error: function(xhr, status, error) {
+
+    }
+});
+//CHECKOUT
+function populateOrderSummary(response) {
+    var responseData = response.data;
+    var orderSummaryContainer = $('#orderSummaryContainer');
+    var totalPrice = 0;
+
+    // Clear existing order summary
+    orderSummaryContainer.empty();
+
+    // Populate order summary
+    var orderSummary = $('<div class="order-summary">');
+
+    // Add product details
+    responseData.forEach(function(product) {
+        var productRow = $('<div class="order-col">');
+        productRow.html(`
+            <div>${product.productName}</div>
+            <div>$${product.price.toFixed(2)}</div>
+        `);
+        orderSummary.append(productRow);
+        totalPrice += product.price;
+    });
+
+    // Add shipping details
+    var shippingRow = $('<div class="order-col">');
+    shippingRow.html(`
+        <div>Shipping</div>
+        <div>FREE</div>
+    `);
+    orderSummary.append(shippingRow);
+
+    // Add total
+    var totalRow = $('<div class="order-col">');
+    totalRow.html(`
+        <div><strong>TOTAL</strong></div>
+        <div><strong class="order-total">$${totalPrice.toFixed(2)}</strong></div>
+    `);
+    orderSummary.append(totalRow);
+
+    // Append order summary to container
+    orderSummaryContainer.append(orderSummary);
+}
+
 $("#billingForm").validate({
     rules: {
         fname: {
@@ -52,7 +108,7 @@ $("#billingForm").validate({
             required: function() {
                 return $("#Visa").is(":checked");
             },
-            length: 3
+            minlength: 3
         },
         "username": {
             required: function() {
@@ -71,6 +127,7 @@ $("#billingForm").validate({
 
 
   $("#submitButton").click(function(event) {
+    event.preventDefault();
     var billingFormValid = $("#billingForm").valid();
     var paymentFormValid = $("#paymentForm").valid();
     

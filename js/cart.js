@@ -1,12 +1,11 @@
 let username="edin1234";
 $.ajax({
-    url: "beckend/get_cart.php",
+    url: "beckend/cart",
     type:"GET",
     data:{username:username},
     dataType: "json",
     success: function(data) {
         populateTableWithData(data);
-        populateCartDropdown(data);
         populateOrderSummary(data);
     },
     error: function(xhr, status, error) {
@@ -14,94 +13,71 @@ $.ajax({
     }
 });
 
+$('#emptyCartButton').click(function() {
+    $.ajax({
+        url: "beckend/cart/delete",
+        type: "DELETE",
+        data:{username:username},
+        success: function() {
+            $('#productTableBody').empty();
+            $('#totalPrice').text('$0.00');
+        },
+        error: function(xhr, status, error) {
+            console.error("Failed to empty the cart:", error);         
+        }
+    });
+});
+
+
 //CARTTABLE
-function populateTableWithData(data) {
+function populateTableWithData(response) {
+    var responseData = response.data; // Extracting the 'data' array from the response
     var tableBody = $('#productTableBody');
     var totalPrice = 0;
-    var products = {};
+    var products = {}; // Object to store unique products
+    
+    tableBody.empty(); // Clearing any existing table rows
+    
+    // Iterate over each product object in the 'data' array
+    responseData.forEach(function(product) {
+        var productName = product.productName;
+        var productPrice = product.price;
+        var productImage = product.mImage;
 
-    //Repeating products
-    data.forEach(function(product) {
-        if (!products[product.name]) {
-            products[product.name] = {
-                count: 0,
-                totalPrice: 0
+        // Check if product already exists in products object
+        if (products[productName]) {
+            // Product already exists, update quantity and total price
+            products[productName].quantity++;
+            products[productName].totalPrice += productPrice;
+            
+            var row = tableBody.find(`tr[data-name="${productName}"]`);
+            row.find('.productQuantity').text(products[productName].quantity);
+            row.find('.productTotal').text( products[productName].totalPrice.toFixed(2));
+        } else {
+            products[productName] = {
+                quantity: 1,
+                totalPrice: productPrice
             };
+
+            var row = $('<tr>');
+            row.attr('data-name', productName);
+            var imageHtml = productImage ? `<td><img src="${productImage}" alt="${productName}" width="50"></td>` : '<td colspan="1">Image not available</td>';
+            row.html(`
+                ${imageHtml}
+                <td class="bold uppercase">${productName}</td>
+                <td class="bold uppercase">$${productPrice.toFixed(2)}</td>
+                <td class="bold uppercase productQuantity">1</td>
+                <td class="bold uppercase">$<span class="productTotal">${productPrice.toFixed(2)}</span></td>
+            `);
+            tableBody.append(row); 
         }
-        products[product.name].count++;
-        products[product.name].totalPrice += product.price;
+        
+        totalPrice += productPrice; 
     });
 
-    tableBody.empty();
-
-    Object.keys(products).forEach(function(productName) {
-        var product = products[productName];
-        var pricePerProduct = product.totalPrice / product.count;
-        var row = $('<tr>');
-        row.html(`
-            <td><img src="${data.find(p => p.name === productName).mimage}" alt="${productName}" width="50"></td>
-            <td class="bold uppercase">${productName}</td>
-            <td class="bold uppercase">$${pricePerProduct.toFixed(2)}</td>
-            <td class="bold uppercase">${product.count}</td>
-            <td class="bold uppercase">$<span class="productTotal">${product.totalPrice.toFixed(2)}</span></td>
-        `);
-        tableBody.append(row);
-        totalPrice += product.totalPrice;
-    });
     var totalElement = $('#totalPrice');
     totalElement.text('$' + totalPrice.toFixed(2));
 }
-
-//DROPDOWN
-function populateCartDropdown(data) {
-    var cartList = $('#cartList');
-    var totalItems = $('#totalItems');
-    var totalQuantity = $('#totalQuantity');
-    var subtotal = $('#subtotal');
-
-    var totalPrice = 0;
-    var itemCount = 0;
-    var itemsSummary = {};
-
-    // Count occurrences of each product and calculate total price
-    data.forEach(function(product) {
-        if (!itemsSummary[product.name]) {
-            itemsSummary[product.name] = {
-                count: 0,
-                totalPrice: 0
-            };
-        }
-        itemsSummary[product.name].count++;
-        itemsSummary[product.name].totalPrice += product.price;
-        totalPrice += product.price;
-        itemCount++;
-    });
-
-    // Clear existing cart items
-    cartList.empty();
-
-    // Populate cart items
-    Object.keys(itemsSummary).forEach(function(productName) {
-        var product = itemsSummary[productName];
-        var pricePerProduct = product.totalPrice / product.count;
-        var productItem = $('<div class="product-widget">');
-        productItem.html(`
-            <div class="product-img">
-                <img src="${data.find(p => p.name === productName).mimage}" alt="${productName}">
-            </div>
-            <div class="product-body">
-                <h3 class="product-name"><a href="#product">${productName}</a></h3>
-                <h4 class="product-price"><span class="qty">${product.count}x</span>$${pricePerProduct.toFixed(2)}</h4>
-            </div>
-        `);
-        cartList.append(productItem);
-    });
-
-    totalItems.text(itemCount);
-    totalQuantity.text(itemCount > 0 ? itemCount + " Item(s) selected" : "No items selected");
-    subtotal.text("SUBTOTAL: $" + totalPrice.toFixed(2));
-}
-
 
 //CHECKOUT
 function populateOrderSummary(data) {
@@ -144,20 +120,3 @@ function populateOrderSummary(data) {
     // Append order summary to container
     orderSummaryContainer.append(orderSummary);
 }
-
-
-
-
-$('#emptyCartButton').click(function() {
-    $.ajax({
-        url: "beckend/delete_cart_all.php",
-        type: "DELETE",
-        success: function() {
-            $('#productTableBody').empty();
-            $('#totalPrice').text('$0.00');
-        },
-        error: function(xhr, status, error) {
-            console.error("Failed to empty the cart:", error);         
-        }
-    });
-});

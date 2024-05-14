@@ -4,7 +4,7 @@ require_once __DIR__ . '/BaseDao.class.php';
 
 class WishlistDao extends BaseDao {
     public function __construct() {
-        parent::__construct('wihlist');
+        parent::__construct('wishlist');
     }
     
     public function add_to_wishlist($wishlist) {
@@ -21,7 +21,7 @@ class WishlistDao extends BaseDao {
     public function get_wishlist($username){
         return $this->query_unique(
         "SELECT p.mImage, p.productName, p.price
-        FROM wihlist c
+        FROM wishlist c
         JOIN products p ON c.productName = p.productName
         WHERE c.username = :username;",
         [
@@ -29,9 +29,10 @@ class WishlistDao extends BaseDao {
         ]
         );
     } 
-    public function delete_wishlist_all(){
-        return $this->query(
-            "DELETE FROM wihlist;"
-        );
-    }  
+    public function delete_wishlist_all($username){
+        $query = "DELETE FROM wishlist WHERE username = :username";    
+            $this->execute($query, [
+                ':username' => $username
+            ]);         
+    }
 }

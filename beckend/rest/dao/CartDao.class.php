@@ -29,9 +29,11 @@ class CartDao extends BaseDao {
         ]
         );
     } 
-    public function delete_cart_all(){
-        return $this->query(
-            "DELETE FROM carts;"
-        );
-    }  
+    public function delete_cart_all($username){
+        $query = "DELETE FROM carts WHERE username = :username";    
+            $this->execute($query, [
+                ':username' => $username
+            ]);         
+    }
+    
 }
