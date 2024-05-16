@@ -71,7 +71,7 @@ function apiFormHandler(form, event) {
     let data = serializeForm(form);
 
     $.ajax({
-        url: "beckend/add_user.php",
+        url: "beckend/users/add",
         type: "POST",
         data: JSON.stringify(data),
         contentType: "application/json",

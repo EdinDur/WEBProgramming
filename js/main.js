@@ -94,10 +94,14 @@
     });
 
     // Product img zoom
-    var zoomMainProduct = document.getElementById('product-main-img');
-    if (zoomMainProduct) {
-        $('#product-main-img .product-preview').zoom();
-    }
+    $(document).ready(function(){
+        var zoomMainProduct = document.getElementById('product-main-img');
+        if (zoomMainProduct) {
+            console.log("Ucitano");
+            $('#product-main-img .product-preview').zoom();
+        }
+    });
+    
 
     /////////////////////////////////////////
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../config.php";
+require_once __DIR__ . "/../config.php";
 
 class BaseDao{
     protected $connection;
@@ -54,11 +54,16 @@ class BaseDao{
     protected function execute($query, $params) {
         $prepared_statement = $this->connection->prepare($query);
         if ($params) {
-        foreach ($params as $key => $param) {
-            $prepared_statement->bindValue($key, $param);
+            foreach ($params as $key => $param) {
+                $prepared_statement->bindValue($key, $param);
+            }
         }
+        $result = $prepared_statement->execute();
+        if (!$result) {
+            // Log or handle the error
+            error_log("Error executing query: " . $prepared_statement->errorInfo()[2]);
         }
-        $prepared_statement->execute();
         return $prepared_statement;
     }
+    
 }

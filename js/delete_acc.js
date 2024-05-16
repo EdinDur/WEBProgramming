@@ -1,10 +1,10 @@
-const username = "edin3";
+const username = "edin4321";
 
 
 $(document).ready(function(){
     $("#yes-btn").click(function(){
         $.ajax({
-            url: "beckend/delete_user.php",
+            url: "beckend/users/delete",
             type: "DELETE",
             data: JSON.stringify({ username: username }),
             contentType: "application/json",

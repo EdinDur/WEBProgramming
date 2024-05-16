@@ -65,7 +65,7 @@ function apiFormHandler(form, event) {
     let sendingUser = serializeSendingForm(form);
 
     $.ajax({
-        url: "beckend/get_user_login.php",
+        url: "beckend/users",
         type: "GET",
         data: sendingUser,
         contentType: "application/json",
@@ -87,7 +87,7 @@ function apiFormHandler(form, event) {
 
 function editUser(newPassword) {
     $.ajax({
-        url: "beckend/edit_user.php",
+        url: "beckend/users/edit",
         type: "PUT",
         data: JSON.stringify(newPassword),
         contentType: "application/json",

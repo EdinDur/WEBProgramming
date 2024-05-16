@@ -54,7 +54,7 @@ function apiFormHandler(form, event) {
     let data = serializeForm(form);
 
     $.ajax({
-        url: "beckend/get_user_login.php",
+        url: "beckend/users",
         type: "GET",
         data: data,
         contentType: "application/json",
