@@ -42,7 +42,8 @@
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#delete_acc">Delete Account</a></li>
-						<li><a href="#login"><i class="fa fa-user-o"></i> My Account</a></li>
+						<li><a onclick="Utils.logout();">Logout</a></li>
+						<li><a href="#forgot_password"><i class="fa fa-user-o"></i> My Account</a></li>
 					</ul>
 				</div>
 			</div>
@@ -85,7 +86,6 @@
 									<a href="#wishlist">
 										<i class="fa fa-heart-o"></i>
 										<span>Your Wishlist</span>
-										<div class="qty">1</div>
 									</a>
 								</div>
 								<!-- /Wishlist -->
@@ -263,17 +263,24 @@
 		<script src="js/jquery.zoom.min.js"></script>
 		<script src="js/main.js"></script>
 		<script src="js/jquery.spapp.min.js"></script>		
-		<script src="js/taostr.js"></script>		
+		<script src="js/taostr.js"></script>	
+		<script src="utils/utils.js"></script>
+		<script src="utils/constants.js"></script>
+		<script src="utils/rest_client.js"></script>	
 		<script src="js/search.js"></script>
+	
 
 		<script>
-			var app = $.spapp({
-  			defaultView  : "#home",
- 			templateDir  : "./tpl/",
-  			pageNotFound : "error_404"
-			});
-
+			if(Utils.get_from_localstorage("user")){
+				var app = $.spapp({
+  				defaultView  : "#home",
+ 				templateDir  : "./tpl/",
+  				pageNotFound : "error_404"
+				});
 			app.run();
+			} else{
+				window.location.href="login"
+			}
 		</script>
 	</body>
 </html>

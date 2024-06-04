@@ -52,33 +52,24 @@ function apiFormHandler(form, event) {
     blockUi("#login-form");
     let data = serializeForm(form);
 
-    $.ajax({
-        url: "beckend/auth/login",
-        type: "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        dataType: "json",
-        success: function(response) {
-            if (response.token && response.username) {
-                $("#login-form")[0].reset();
-                showSuccessMessage("Login successful!");
-                console.log("Login successful");
+    RestClient.post('beckend/auth/login', JSON.stringify(data), function(response) {
+        if (response.token && response.username) {
+            $("#login-form")[0].reset();
 
-                Utils.set_to_localstorage('user', response);
+            showSuccessMessage("Login successful!");
+            console.log("Login successful");
+                
+            Utils.set_to_localstorage('user', response);
 
-                setTimeout(function() {
-                    window.location.href = '#home';
-                }, 2000);
-            } else {
-                showErrorMessage("Invalid username or password");
-            }
-        },
-        error: function() {
-            showErrorMessage("Failed to login");
-        },
-        complete: function() {
-            unblockUi("#login-form");
+            setTimeout(function() {
+                window.location = '../';
+            }, 2000);
+        } else {
+            showErrorMessage("Invalid username or password");
         }
+        unblockUi("#login-form");
+    }, function() {
+        showErrorMessage("Failed to login");
+        unblockUi("#login-form");
     });
-    
 }

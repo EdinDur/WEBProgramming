@@ -26,9 +26,15 @@ Flight::set('cart_service', new CartService());
  */
 Flight::route('POST /cart/add', function() {
     $payload = Flight::request()->data->getData();
+    $user = Flight::get('user');
+
+    if (isset($user->username)) {
+        $payload['username'] = $user->username;
+    } else {
+        Flight::halt(400, "Username is required");
+    }
 
     $cart_service = new CartService();
-
     $cart = $cart_service->add_to_cart($payload);
 
     if ($cart) {
@@ -37,6 +43,8 @@ Flight::route('POST /cart/add', function() {
         Flight::json(['message' => "Failed to add to cart", 'data' => null]);
     }
 });
+
+
     /**
      * @OA\Get(
      *      path="/cart",
@@ -55,17 +63,23 @@ Flight::route('POST /cart/add', function() {
      *      )
      * )
      */
-Flight::route('GET /cart', function() {
-    $username = Flight::request()->query['username'];
-
-    $cart_service = new CartService();
-
-    $data = $cart_service->get_cart($username);
-
-    Flight::json([
-        'data' => $data,
-    ]);
-});
+    Flight::route('GET /cart', function() {
+        $user = Flight::get('user');
+    
+        if (isset($user->username)) {
+            $username = $user->username;
+        } else {
+            Flight::halt(400, "Username is required");
+        }
+    
+        $cart_service = new CartService();
+        $data = $cart_service->get_cart($username);
+    
+        Flight::json([
+            'data' => $data,
+        ]);
+    });
+    
 
 /**
  * @OA\Delete(
@@ -86,11 +100,17 @@ Flight::route('GET /cart', function() {
  * )
  */
 Flight::route('DELETE /cart/delete', function() {
-    $username = Flight::request()->query['username'];
+
+    $user = Flight::get('user');
+    
+    if (isset($user->username)) {
+        $username = $user->username;
+    } else {
+        Flight::halt(400, "Username is required");
+    }
 
     $cart_service = new CartService();
-
     $data = $cart_service->delete_cart_all($username);
 
-    Flight::json(["Zavrseno"]);
+    Flight::json(["message" => "Zavrseno"]);
 });

@@ -45,10 +45,14 @@ class UserDao extends BaseDao {
     }
 
     public function delete_user($username) {
-        $query = "DELETE FROM users WHERE username = :username";
-        $this->execute($query, [
-            ':username' => $username
-        ]);
+        try {
+            $query = "DELETE FROM users WHERE username = :username";
+            $this->execute($query, [':username' => $username]);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error in UserDao while deleting user: " . $e->getMessage());
+            return false;
+        }
     }
     
     

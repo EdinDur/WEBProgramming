@@ -1,9 +1,6 @@
 let username="edin1234";
-$.ajax({
-    url: "beckend/wishlist",
-    data: {username: username},
-    dataType: "json",
-    success: function(response) {
+function fetchWishlist() {
+    RestClient.get("beckend/wishlist", {}, function(response) {
         var responseData = response.data;
         var tableBody = $('#productWishlistTableBody');
         var totalPrice = 0;
@@ -38,23 +35,19 @@ $.ajax({
             tableBody.append(row);
             totalPrice += product.totalPrice;
         });
-        var totalElement = $('#totalPrice');
-        totalElement.text('$' + totalPrice.toFixed(2));
-    }
-});
-
+        $('#totalPrice').text('$' + totalPrice.toFixed(2));
+    }, function(jqXHR) {
+        console.error("Failed to fetch wishlist:", jqXHR);
+    });
+}
+fetchWishlist();
 
 $('#emptyWishlistButton').click(function() {
-    $.ajax({
-        url: "beckend/wishlist/delete",
-        type: "DELETE",
-        data:{username:username},
-        success: function() {
-            $('#productWishlistTableBody').empty();
-            $('#totalPrice').text('$0.00');
-        },
-        error: function(xhr, status, error) {
-            console.error("Failed to empty the wishlist:", error);         
-        }
+    RestClient.delete("beckend/wishlist/delete", {}, function() {
+        $('#productWishlistTableBody').empty();
+        $('#totalPrice').text('$0.00');
+    }, function(jqXHR) {
+        console.error("Failed to empty the wishlist:", jqXHR);
     });
 });
+

@@ -1,26 +1,15 @@
-const username = "edin4321";
-
-
 $(document).ready(function(){
     $("#yes-btn").click(function(){
-        $.ajax({
-            url: "beckend/users/delete",
-            type: "DELETE",
-            data: JSON.stringify({ username: username }),
-            contentType: "application/json",
-            dataType: "json",
-            success: function(response) {
-                setTimeout(function() {
-                window.location.href = '#home';
+        RestClient.delete("beckend/users/delete", { username: username }, function(response) {
+            setTimeout(function() {
+                Utils.logout();
             }, 2000);
-            },
-            error: function(xhr, status, error) {
-                showErrorMessage("Failed to delete");
-            }
+        }, function(xhr, status, error) {
+
         });
     });
-
     $("#no-btn").click(function(){
         window.location.href = "#home";
     });
 });
+

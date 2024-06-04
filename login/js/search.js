@@ -1,11 +1,19 @@
 let data=[];
 let username="edin1234";
 
+
 //Cart Dropdown
-RestClient.get("beckend/cart", { username: username }, function(data) {
-    populateCartDropdown(data);
-}, function(jqXHR) {
-    console.error("Error fetching cart data:", jqXHR);
+$.ajax({
+    url: "beckend/cart",
+    type:"GET",
+    data:{username:username},
+    dataType: "json",
+    success: function(data) {
+        populateCartDropdown(data);
+    },
+    error: function(xhr, status, error) {
+
+    }
 });
 
 function populateCartDropdown(response) {
@@ -143,19 +151,48 @@ document.addEventListener('click', function(event) {
 
 //Add to cart
 function addToCart(productName) {
-    RestClient.post("beckend/cart/add", {productName: productName}, function(response) {
-        
-    }, function(jqXHR) {
-        showErrorMessage("Unable to put product in cart");
+    var cartProduct = {
+        productName: productName,
+        username: username
+    };
+    $.ajax({
+        url: "beckend/cart/add",
+        type: "POST",
+        data: JSON.stringify(cartProduct),
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+            
+
+                     
+            
+        },
+        error: function(xhr, status, error) {
+            showErrorMessage("Unable to put product in cart");
+        }
     });
 }
 
-
 //Add to wishlist
 function AddToWishlist(productName) {
-    RestClient.post("beckend/wishlist/add", {productName: productName}, function(response) {
-        
-    }, function(jqXHR) {
-        showErrorMessage("Unable to put product in wishlist");
+    var cartProduct = {
+        productName: productName,
+        username: username
+    };
+    $.ajax({
+        url: "beckend/wishlist/add",
+        type: "POST",
+        data: JSON.stringify(cartProduct),
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+            
+
+                     
+            
+        },
+        error: function(xhr, status, error) {
+            showErrorMessage("Unable to put product in cart");
+        }
     });
 }
