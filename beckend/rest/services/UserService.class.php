@@ -9,6 +9,7 @@ class UserService {
         $this->user_dao = new UserDao();
     }
     public function add_user($user) {
+        $user["psw"] = password_hash($user["psw"], PASSWORD_BCRYPT);
         return $this->user_dao->add_user($user);
     }
     public function get_user_login($user) {
@@ -18,7 +19,11 @@ class UserService {
         return $this->user_dao->edit_user($user);
     }
     public function delete_user($username) {
-        return $this->user_dao->delete_user($username);
+        try {
+            return $this->user_dao->delete_user($username);
+        } catch (Exception $e) {
+            error_log("Error in UserService while deleting user: " . $e->getMessage());
+            return false;
+        }
     }
-    
 }

@@ -25,9 +25,15 @@ Flight::set('wishlist_service', new WishlistService());
  */
 Flight::route('POST /wishlist/add', function() {
     $payload = Flight::request()->data->getData();
+    $user = Flight::get('user');
+
+    if (isset($user->username)) {
+        $payload['username'] = $user->username;
+    } else {
+        Flight::halt(400, "Username is required");
+    }
 
     $wishlist_service = new WishlistService();
-
     $wishlist = $wishlist_service->add_to_wishlist($payload);
 
     if ($wishlist) {
@@ -36,6 +42,7 @@ Flight::route('POST /wishlist/add', function() {
         Flight::json(['message' => "Failed to add to wishlist", 'data' => null]);
     }
 });
+
 
     /**
      * @OA\Get(
@@ -55,17 +62,23 @@ Flight::route('POST /wishlist/add', function() {
      *      )
      * )
      */
-Flight::route('GET /wishlist', function() {
-    $username = Flight::request()->query['username'];
-
-    $wishlist_service = new WishlistService();
-
-    $data = $wishlist_service->get_wishlist($username);
-
-    Flight::json([
-        'data' => $data,
-    ]);
-});
+    Flight::route('GET /wishlist', function() {
+        $user = Flight::get('user');
+    
+        if (isset($user->username)) {
+            $username = $user->username;
+        } else {
+            Flight::halt(400, "Username is required");
+        }
+    
+        $wishlist_service = new WishlistService();
+        $data = $wishlist_service->get_wishlist($username);
+    
+        Flight::json([
+            'data' => $data,
+        ]);
+    });
+    
 
 /**
  * @OA\Delete(
@@ -86,11 +99,16 @@ Flight::route('GET /wishlist', function() {
  * )
  */
 Flight::route('DELETE /wishlist/delete', function() {
-    $username = Flight::request()->query['username'];
+    $user = Flight::get('user');
+
+    if (isset($user->username)) {
+        $username = $user->username;
+    } else {
+        Flight::halt(400, "Username is required");
+    }
 
     $wishlist_service = new WishlistService();
-
     $data = $wishlist_service->delete_wishlist_all($username);
 
-    Flight::json(["Zavrseno"]);
+    Flight::json(["message" => "Wishlist successfully emptied"]);
 });

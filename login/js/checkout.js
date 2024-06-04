@@ -1,10 +1,16 @@
 let username="edin1234";
-RestClient.get("backend/cart?username=" + username, function(data) {
-    populateOrderSummary(data);
-}, function(xhr) {
-    console.error("Failed to get cart data:", xhr);
-});
+$.ajax({
+    url: "beckend/get_cart.php",
+    type:"GET",
+    data:{username:username},
+    dataType: "json",
+    success: function(data) {
+        populateOrderSummary(data);
+    },
+    error: function(xhr, status, error) {
 
+    }
+});
 //CHECKOUT
 function populateOrderSummary(response) {
     var responseData = response.data;

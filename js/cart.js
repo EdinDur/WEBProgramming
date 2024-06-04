@@ -1,58 +1,41 @@
-let username="edin1234";
-$.ajax({
-    url: "beckend/cart",
-    type:"GET",
-    data:{username:username},
-    dataType: "json",
-    success: function(data) {
-        populateTableWithData(data);
-        populateOrderSummary(data);
-    },
-    error: function(xhr, status, error) {
+let username = "edin1234";
 
-    }
+RestClient.get("beckend/cart", { username: username }, function(data) {
+    populateTableWithData(data);
+    populateOrderSummary(data);
+}, function(xhr) {
+    console.error("Failed to get cart data:", xhr);
 });
 
 $('#emptyCartButton').click(function() {
-    $.ajax({
-        url: "beckend/cart/delete",
-        type: "DELETE",
-        data:{username:username},
-        success: function() {
-            $('#productTableBody').empty();
-            $('#totalPrice').text('$0.00');
-        },
-        error: function(xhr, status, error) {
-            console.error("Failed to empty the cart:", error);         
-        }
+    RestClient.delete("beckend/cart/delete", {username: username}, function() {
+        $('#productTableBody').empty();
+        $('#totalPrice').text('$0.00');
+    }, function(xhr) {
+        console.error("Failed to empty the cart:", xhr);
     });
 });
 
-
-//CARTTABLE
 function populateTableWithData(response) {
-    var responseData = response.data; // Extracting the 'data' array from the response
+    var responseData = response.data;
     var tableBody = $('#productTableBody');
     var totalPrice = 0;
-    var products = {}; // Object to store unique products
-    
-    tableBody.empty(); // Clearing any existing table rows
-    
-    // Iterate over each product object in the 'data' array
+    var products = {};
+
+    tableBody.empty();
+
     responseData.forEach(function(product) {
         var productName = product.productName;
         var productPrice = product.price;
         var productImage = product.mImage;
 
-        // Check if product already exists in products object
         if (products[productName]) {
-            // Product already exists, update quantity and total price
             products[productName].quantity++;
             products[productName].totalPrice += productPrice;
-            
+
             var row = tableBody.find(`tr[data-name="${productName}"]`);
             row.find('.productQuantity').text(products[productName].quantity);
-            row.find('.productTotal').text( products[productName].totalPrice.toFixed(2));
+            row.find('.productTotal').text(products[productName].totalPrice.toFixed(2));
         } else {
             products[productName] = {
                 quantity: 1,
@@ -69,28 +52,23 @@ function populateTableWithData(response) {
                 <td class="bold uppercase productQuantity">1</td>
                 <td class="bold uppercase">$<span class="productTotal">${productPrice.toFixed(2)}</span></td>
             `);
-            tableBody.append(row); 
+            tableBody.append(row);
         }
-        
-        totalPrice += productPrice; 
+
+        totalPrice += productPrice;
     });
 
-    var totalElement = $('#totalPrice');
-    totalElement.text('$' + totalPrice.toFixed(2));
+    $('#totalPrice').text('$' + totalPrice.toFixed(2));
 }
 
-//CHECKOUT
 function populateOrderSummary(data) {
     var orderSummaryContainer = $('#orderSummaryContainer');
     var totalPrice = 0;
 
-    // Clear existing order summary
     orderSummaryContainer.empty();
 
-    // Populate order summary
     var orderSummary = $('<div class="order-summary">');
 
-    // Add product details
     data.forEach(function(product) {
         var productRow = $('<div class="order-col">');
         productRow.html(`
@@ -101,7 +79,6 @@ function populateOrderSummary(data) {
         totalPrice += product.price;
     });
 
-    // Add shipping details
     var shippingRow = $('<div class="order-col">');
     shippingRow.html(`
         <div>Shipping</div>
@@ -109,7 +86,6 @@ function populateOrderSummary(data) {
     `);
     orderSummary.append(shippingRow);
 
-    // Add total
     var totalRow = $('<div class="order-col">');
     totalRow.html(`
         <div><strong>TOTAL</strong></div>
@@ -117,6 +93,5 @@ function populateOrderSummary(data) {
     `);
     orderSummary.append(totalRow);
 
-    // Append order summary to container
     orderSummaryContainer.append(orderSummary);
 }

@@ -81,11 +81,10 @@ function editUser(newPassword) {
     RestClient.put("beckend/users/edit", JSON.stringify(newPassword), function(response) {
         showSuccessMessage("Password Changed");
         setTimeout(function() {
-            window.location.href = '#login';
+            window.location = './login.html';
         }, 2000);
     }, function() {
         showErrorMessage("Failed to restart a password");
         unblockUi("#restart-form");
     });
 }
-

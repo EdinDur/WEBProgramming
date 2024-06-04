@@ -2,6 +2,9 @@
 
 require_once __DIR__ . '/../services/UserService.class.php';
 
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
+
 Flight::set('user_service', new UserService());
 
  /**
@@ -24,17 +27,40 @@ Flight::set('user_service', new UserService());
  *      )
  * )
  */
-Flight::route('POST /users/add', function() {
-    $payload = Flight::request()->data->getData();
+
+ Flight::route('POST /users/add', function() {
+    // Get raw POST data
+    $rawData = Flight::request()->getBody();
+    
+    $payload = json_decode($rawData, true);
+
+    // Validate payload
+    if (!isset($payload['username']) || !isset($payload['email']) || !isset($payload['psw'])) {
+        Flight::halt(400, "Invalid payload");
+    }
 
     $user_service = new UserService();
 
-    $user = $user_service->add_user($payload);
+    try {
+        $user = $user_service->add_user($payload);
 
-    if ($user) {
-        Flight::json(['message' => "You have successfully added the user", 'data' => $user]);
-    } else {
-        Flight::json(['message' => "Failed to add the user", 'data' => null]);
+        if ($user) {
+        
+            unset($user["userPassword"]);
+            
+            $jwt_payload = [
+                "user" => $user,
+                "iat" => time(),
+                "exp" => time() + (60*60*24*30) // valid for 30 days
+            ];
+            $token = JWT::encode($jwt_payload, JWT_SECRET, "HS256");
+
+            Flight::json(array_merge($user, ["token" => $token]));
+        } else {
+            Flight::halt(500, "Failed to add the user");
+        }
+    } catch (Exception $e) {
+        Flight::halt(500, "Internal Server Error $user");
     }
 });
 
@@ -106,8 +132,6 @@ Flight::route('PUT /users/edit', function() {
  * )
  */
 Flight::route('GET /users', function() {
-    $username = Flight::request()->query['username'];
-    $password = Flight::request()->query['psw'];
 
     $user = [
         'username' => $username,
@@ -142,11 +166,28 @@ Flight::route('GET /users', function() {
  * )
  */
 Flight::route('DELETE /users/delete', function() {
-    $username = Flight::request()->query['username'];
+    $user = Flight::get('user');
+
+    if (isset($user->username)) {
+        $username = $user->username;
+    } else {
+        Flight::halt(400, "Username is required");
+    }
 
     $user_service = new UserService();
+    $result = $user_service->delete_user($username);
 
-    $data = $user_service->delete_user($username);
-
-    Flight::json(["Zavrseno"]);
+    if ($result) {
+        Flight::json(["message" => "User $username deleted successfully"]);
+    } else {
+        Flight::halt(500, "Failed to delete user $username");
+    }
 });
+
+
+
+
+
+
+
+

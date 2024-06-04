@@ -4,75 +4,65 @@ const productCardHomeContainer = $("[data-product-new-cards-container]");
 const productsBestSellingTemplate = $("[data-product-best-selling-template]");
 const productBestSellingContainer = $("[data-product-best-selling-cards-container]");
 
-$.ajax({
-    url: "beckend/products",
-    type: "GET",
-    dataType: "json",
-    success: function(response) {
-        const data = response.data;
+RestClient.get("beckend/products", {}, function(response) {
+    const data = response.data;
 
-        const newProducts = data.filter(product => product.productNew === 1);
-        const bestSellingProducts = data.filter(product => product.productNew === 0);
-        const bestSellingProductsToDisplay = bestSellingProducts.slice(0, 4);
-        const newProductsToDisplay = newProducts.slice(2, 6);
+    const newProducts = data.filter(product => product.productNew === 1);
+    const bestSellingProducts = data.filter(product => product.productNew === 0);
+    const bestSellingProductsToDisplay = bestSellingProducts.slice(0, 4);
+    const newProductsToDisplay = newProducts.slice(2, 6);
 
-        $.each(newProductsToDisplay, function(index, product) {
-            const cardContent = productsNewTemplate.html();     
-            const $card = $(cardContent);
+    $.each(newProductsToDisplay, function(index, product) {
+        const cardContent = productsNewTemplate.html();     
+        const $card = $(cardContent);
+
+        $card.find("[data-product-name]").text(product.productName);
+        $card.find("[data-product-price]").text("$" + product.price);
+        $card.find("[data-product-category]").text(product.category);
+        $card.find("[data-product-image]").attr("src", product.mImage);
+
+        if (product.productNew) {
+            $card.find(".new").text("New");
+        } else {
+            $card.find(".new").remove();
+        }
     
-            $card.find("[data-product-name]").text(product.productName);
-            $card.find("[data-product-price]").text("$" + product.price);
-            $card.find("[data-product-category]").text(product.category);
-            $card.find("[data-product-image]").attr("src", product.mImage);
+        if (product.sale) {
+            $card.find(".sale").text(`${product.sale}%`);
+        } else {
+            $card.find(".sale").remove();
+        }
 
-            if (product.productNew) {
-                $card.find(".new").text("New");
-            } else {
-                $card.find(".new").remove();
-            }
-        
-            if (product.sale) {
-                $card.find(".sale").text(`${product.sale}%`);
-            } else {
-                $card.find(".sale").remove();
-            }
+        productCardHomeContainer.append($card);
+    });
 
+    $.each(bestSellingProductsToDisplay, function(index, product) {
+        const cardContent = productsBestSellingTemplate.html();
+        const $card = $(cardContent);
+
+        $card.find("[data-product-name]").text(product.productName);
+        $card.find("[data-product-price]").text("$" + product.price);
+        $card.find("[data-product-category]").text(product.category);
+        $card.find("[data-product-image]").attr("src", product.mImage);
     
-        
-            productCardHomeContainer.append($card);
-        });
+        const newIndicator = $card.find(".new");
+        if (product.productNew) {
+            newIndicator.text("New");
+        } else {
+            newIndicator.remove();
+        }
+    
+        const onSaleIndicator = $card.find(".sale");
+        if (product.sale) {
+            onSaleIndicator.text(`${product.sale}%`);
+        } else {
+            onSaleIndicator.remove();
+        }
 
-        $.each(bestSellingProductsToDisplay, function(index, product) {
-            const cardContent = productsBestSellingTemplate.html();
-            const $card = $(cardContent);
-
-            $card.find("[data-product-name]").text(product.productName);
-            $card.find("[data-product-price]").text("$" + product.price);
-            $card.find("[data-product-category]").text(product.category);
-            $card.find("[data-product-image]").attr("src", product.mImage);
-        
-            const newIndicator = $card.find(".new");
-            if (product.productNew) {
-                newIndicator.text("New");
-            } else {
-                newIndicator.remove();
-            }
-        
-            const onSaleIndicator = $card.find(".sale");
-            if (product.sale) {
-                onSaleIndicator.text(`${product.sale}%`);
-            } else {
-                onSaleIndicator.remove();
-            }
-
-        
-        
-            productBestSellingContainer.append($card);
-        });
-    },
-    error: function(xhr, status, error) {
-        console.error("Error fetching data:", error);
-    }
+        productBestSellingContainer.append($card);
+    });
+}, function(xhr) {
+    console.error("Error fetching data:", xhr);
 });
 //button listeners
 const buttons = document.querySelectorAll('.cta-btn');
